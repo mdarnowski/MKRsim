@@ -7,6 +7,7 @@ import tensorflow as tf
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 import matplotlib.pyplot as plt
+import joblib
 
 # Create synthetic data with RGB colors
 np.random.seed(42)
@@ -64,6 +65,11 @@ history = model.fit(X_train_scaled, y_train, epochs=20, batch_size=32, validatio
 # Evaluate the model
 loss, accuracy = model.evaluate(X_test_scaled, y_test)
 print(f'Test Accuracy: {accuracy:.2f}')
+
+# Save the model to file
+model.save('laundry_sorting_model.h5')
+joblib.dump(scaler, 'scaler.pkl')
+joblib.dump(label_encoder, 'label_encoder.pkl')
 
 # Predict new data
 new_laundry_item = np.array([[30, 144, 255]])  # Example: RGB color
