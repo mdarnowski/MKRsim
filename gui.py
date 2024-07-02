@@ -7,9 +7,9 @@ import joblib
 import numpy as np
 from tensorflow.keras.models import load_model
 
-model = load_model("laundry_sorting_model.h5")
-scaler = joblib.load("scaler.pkl")
-label_encoder = joblib.load("label_encoder.pkl")
+model = load_model("laundry_sorting_model_final.h5")
+scaler = joblib.load("scaler_final.pkl")
+label_encoder = joblib.load("label_encoder_final.pkl")
 
 
 # Define the function for predicting the category of a laundry item
