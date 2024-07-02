@@ -1,20 +1,18 @@
 import tkinter as tk
-from tkinter import messagebox
+from tkinter import ttk, messagebox
 import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from tensorflow.keras.models import load_model
 import joblib
 
-# Load existing model and preprocessed data
 best_model = load_model('laundry_sorting_model.h5')
 scaler = joblib.load('scaler.pkl')
 label_encoder = joblib.load('label_encoder.pkl')
 
 # Generate new dataset
-data_size = 5000
+data_size = 100
 colors = np.random.randint(0, 256, size=(data_size, 3))
-
 data = pd.DataFrame(colors, columns=['red', 'green', 'blue'])
 X = data[['red', 'green', 'blue']]
 
@@ -28,29 +26,45 @@ X_test_scaled = scaler.transform(X_test)
 user_labels = []
 
 
-# GUI Setup
+def rgb_to_hex(rgb):
+    return "#%02x%02x%02x" % tuple(rgb)
+
+
 class ColorClassifierApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Color Classifier")
+        self.root.geometry("400x300")
 
-        self.label = tk.Label(root, text="Classify the color shown")
-        self.label.pack()
+        style = ttk.Style()
+        style.theme_use('clam')
+        style.configure('TButton', font=('Helvetica', 12), padding=10, background='#ffffff')
+        style.configure('TLabel', font=('Helvetica', 14), padding=10)
+        style.configure('TFrame', padding=20)
 
-        self.color_box = tk.Canvas(root, width=100, height=100)
-        self.color_box.pack()
+        main_frame = ttk.Frame(root)
+        main_frame.pack(fill=tk.BOTH, expand=True)
 
-        self.dark_button = tk.Button(root, text="Dark", command=lambda: self.classify_color('dark'))
-        self.dark_button.pack(side='left')
+        self.label = ttk.Label(main_frame, text="Classify the color shown")
+        self.label.pack(pady=10)
 
-        self.white_button = tk.Button(root, text="White", command=lambda: self.classify_color('white'))
-        self.white_button.pack(side='left')
+        self.color_box = tk.Canvas(main_frame, width=100, height=100, bd=2, relief='solid')
+        self.color_box.pack(pady=10)
 
-        self.colored_button = tk.Button(root, text="Colored", command=lambda: self.classify_color('colored'))
-        self.colored_button.pack(side='left')
+        button_frame = ttk.Frame(main_frame)
+        button_frame.pack(pady=10)
 
-        self.end_button = tk.Button(root, text="End Training", command=self.end_training)
-        self.end_button.pack(side='left')
+        self.dark_button = ttk.Button(button_frame, text="Dark", command=lambda: self.classify_color('dark'))
+        self.dark_button.grid(row=0, column=0, padx=5)
+
+        self.white_button = ttk.Button(button_frame, text="White", command=lambda: self.classify_color('white'))
+        self.white_button.grid(row=0, column=1, padx=5)
+
+        self.colored_button = ttk.Button(button_frame, text="Colored", command=lambda: self.classify_color('colored'))
+        self.colored_button.grid(row=0, column=2, padx=5)
+
+        self.end_button = ttk.Button(main_frame, text="End Training", command=self.end_training)
+        self.end_button.pack(pady=10)
 
         self.index = 0
         self.show_next_color()
@@ -58,7 +72,7 @@ class ColorClassifierApp:
     def show_next_color(self):
         if self.index < len(colors):
             color = colors[self.index]
-            self.color_box.create_rectangle(0, 0, 100, 100, fill=self.rgb_to_hex(color), outline="")
+            self.color_box.create_rectangle(0, 0, 100, 100, fill=rgb_to_hex(color), outline="")
         else:
             messagebox.showinfo("Info", "All colors have been classified")
 
@@ -90,10 +104,8 @@ class ColorClassifierApp:
         messagebox.showinfo("Training Ended", f"Model training ended. Test Accuracy: {accuracy:.2f}")
         self.root.quit()
 
-    def rgb_to_hex(self, rgb):
-        return "#%02x%02x%02x" % tuple(rgb)
 
-
-root = tk.Tk()
-app = ColorClassifierApp(root)
-root.mainloop()
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = ColorClassifierApp(root)
+    root.mainloop()
