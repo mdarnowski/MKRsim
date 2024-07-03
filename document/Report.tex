@@ -8,11 +8,24 @@
 \usepackage{subcaption}
 \usepackage[margin=1in]{geometry} % Adjust the margins for better fit
 \newcommand{\mycomment}[1]{}
+\usepackage{titling}
+\usepackage{textcomp}
 \title{Automated Laundry Sorting Using Neural Networks}
 \author{Dominik Krawiec s16941, Mateusz Darnowski s18322}
-\date{}
+\date{Polish-Japanese Academy of Information Technology\\\today}\begin{document}
 
-\begin{document}
+
+
+
+% Adjust title formatting for better centering
+\pretitle{\vspace*{\fill}\begin{center}\Huge\bfseries} % Pre-title formatting with vertical space
+\posttitle{\end{center}\vspace*{\fill}} % Post-title formatting with vertical space
+\preauthor{\begin{center}\large} % Pre-author formatting
+\postauthor{\end{center}} % Post-author formatting
+\predate{\begin{center}\large} % Pre-date formatting
+\postdate{\end{center}\vspace*{\fill}} % Post-date formatting with vertical space
+
+
 
 \maketitle
 \newpage
@@ -55,8 +68,8 @@ The brightness of each color is calculated using the formula:
 \[ \text{brightness} = 0.299 \cdot R + 0.587 \cdot G + 0.114 \cdot B \]
 Based on the brightness value, colors are categorized into three classes:
 \begin{itemize}
-    \item \textbf{Dark}: brightness < 85
-    \item \textbf{White}: brightness > 170
+    \item \textbf{Dark}: brightness $<$ 85
+    \item \textbf{White}: brightness $>$ 170
     \item \textbf{Colored}: 85 $\leq$ brightness $\leq$ 170
 \end{itemize}
 This categorization helps in simulating the human decision-making process when sorting laundry.
@@ -254,4 +267,42 @@ Future improvements could include:
  \end{itemize}
 \subsection{Applications}
 The methodology and the approach followed for this project have far-reaching applications beyond laundry sorting. Similar models can be worked out for a variety of categorization tasks within an industrial setting, including sorting by color or type in manufacturing lines, image recognition systems in quality control, and automation processes where the question of accurate classification arises. Integration of neural networks with user feedback mechanisms is considered a very powerful tool for making any system adaptive and intelligent, working like human cognition, therefore increase in efficiency and reduction of errors in day-to-day tasks.
+
+
+\newpage
+\begin{thebibliography}{9}
+\bibitem{hyperband}
+  Li, L., Jamieson, K., DeSalvo, G., Rostamizadeh, A., \& Talwalkar, A. (2017).
+  Hyperband: A novel bandit-based approach to hyperparameter optimization.
+  \textit{Journal of Machine Learning Research}, 18(185), 1-52.
+
+\bibitem{tsne}
+  Maaten, L. V. D., \& Hinton, G. (2008).
+  Visualizing Data using t-SNE.
+  \textit{Journal of Machine Learning Research}, 9(Nov), 2579-2605.
+
+\bibitem{pca}
+  Jolliffe, I. T. (2002).
+  \textit{Principal Component Analysis}.
+  Springer Series in Statistics, Springer.
+
+\bibitem{keras}
+  Chollet, F. (2015).
+  Keras: Deep Learning library for Theano and TensorFlow.
+  \textit{GitHub}.
+  \url{https://github.com/fchollet/keras}
+
+
+\bibitem{lecun2015deep}
+  LeCun, Y., Bengio, Y., \& Hinton, G. (2015).
+  Deep learning.
+  \textit{Nature}, 521(7553), 436-444.
+
+
+
+
+
+\end{thebibliography}
+
+
 \end{document}
